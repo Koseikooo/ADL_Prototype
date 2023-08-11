@@ -20,9 +20,11 @@ public class CraftManager : MonoBehaviour
 
     public void AddToCrafting(Recepie recepie)
     {
+        recepie.View = null;
         InventoryManager.acc.Recepies.Remove(recepie);
         CraftRecepies.Add(recepie);
         recepie.State = RecepieState.Inactive;
+        
 
         UpdateCraftingVisual();
         InventoryManager.acc.UpdateInventoryVisual();
@@ -32,6 +34,7 @@ public class CraftManager : MonoBehaviour
     {
         InventoryManager.acc.Recepies.Add(recepie);
         CraftRecepies.Remove(recepie);
+        
 
         UpdateCraftingVisual();
         InventoryManager.acc.UpdateInventoryVisual();
@@ -50,6 +53,9 @@ public class CraftManager : MonoBehaviour
 
         for (int i = 0; i < CraftRecepies.Count; i++)
         {
+            if (CraftRecepies[i].View != null)
+                continue;
+
             int index = i;
             var view = InventoryService.GetPooledView(ViewPool, CraftParent);
             CraftRecepies[i].AssignView(view);

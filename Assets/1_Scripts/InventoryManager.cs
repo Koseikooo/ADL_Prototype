@@ -35,6 +35,7 @@ public class InventoryManager : MonoBehaviour
 
     public void AddRecepie(Recepie recepie)
     {
+        recepie.View = null;
         var newRecepie = new Recepie(recepie);
         newRecepie.State = RecepieState.Inventory;
 
@@ -45,6 +46,7 @@ public class InventoryManager : MonoBehaviour
     public void RemoveRecepie(Recepie recepie)
     {
         UpdateInventoryVisual();
+        
     }
 
     public void UpdateInventoryVisual()
@@ -60,6 +62,9 @@ public class InventoryManager : MonoBehaviour
 
         for (int i = 0; i < Recepies.Count; i++)
         {
+            if (Recepies[i].View != null)
+                continue;
+
             var index = i;
             var view = InventoryService.GetPooledView(ViewPool, InventoryParent);
             Recepies[i].AssignView(view);
